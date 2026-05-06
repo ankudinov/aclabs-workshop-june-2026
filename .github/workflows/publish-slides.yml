@@ -1,0 +1,55 @@
+---
+name: publish slides
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - slides/**
+      - .github/workflows/publish-slides.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout code ✅
+        uses: actions/checkout@v4
+
+      - name: Build directories and copy images 🖼️
+        run: |
+          mkdir -p site/slides site/pdfs
+          cp -R slides/img site/slides/img
+
+      - name: Build HTML from Marp
+        uses: docker://ghcr.io/marp-team/marp-cli:v4.3.1
+        with:
+          args: --theme-set ./slides/themes/ --html --input-dir slides/ -o site/slides/
+        env:
+          MARP_USER: root:root
+
+      - name: Build PDF from Marp
+        uses: docker://ghcr.io/marp-team/marp-cli:v4.3.1
+        with:
+          args: --theme-set ./slides/themes/ --html --pdf --allow-local-files --input-dir slides/ -o site/pdfs/
+        env:
+          MARP_USER: root:root
+
+      - name: Setup Pages 📖
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact 🔼
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site/
+
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4

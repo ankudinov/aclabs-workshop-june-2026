@@ -18,5 +18,8 @@
         // allow fenced blocks in Markdown
         "MD046": false,
     },
+    "markdown.marp.themes": [
+        "./slides/themes/jobs.css"
+    ],
     "markdown.marp.html": "all"
 }
