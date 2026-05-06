@@ -96,6 +96,34 @@ section {
 
 # Agenda
 
-- Add workshop topics here
-- Add demos, labs, and breaks
-- Add speaker notes as needed
+<style scoped>section {font-size: 13px;}</style>
+<style scoped>p {font-size: 13px;}</style>
+
+:fast_forward: Start: 09:00
+
+- Kickoff & Infrastructure:
+  - Intro, logistics, and `labs.arista` environment overview and user assignment
+- Evolution of the Network Automation and Lab Environment
+  - Yet another ~~dev~~ lab environment challenge and Dev Container intro
+  - The journey from early AVD container images to a cloud-hosted labs
+  - Containerlab on GitHub Codespaces and why everyone can build this
+- The Deeplink Mandate:
+  - Understanding why deeplinks are critical for reproducibility and workflow efficiency
+- Getting Started Hands-On:
+  - Setup a lab repository, Codespaces start-stop exercise
+  - Container pre-builds and why they are <u>**VERY**</u> important
+  - The story of two platforms: ARMing your lab
+- A survival guide to SELinux, the kernel and permissions
+
+☕ Break: 10:45 - 11:15
+
+- The Great Escape
+  - Building lab archives on GitHub pages
+  - Smart entrypoints and VS Code tasks to solve image import and routines
+  - Code-server - the perfect UI
+  - Building a simple API for deeplink support
+- Summary, credits and call for a change
+
+🛑 Stop: 13:00
+
+![bg left:38%](img/pexels-suzy-hazelwood-1226398.jpg)

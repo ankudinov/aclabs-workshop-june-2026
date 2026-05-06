@@ -12,7 +12,8 @@
                 "br",
                 "sup",
                 "figure",
-                "figcaption"
+                "figcaption",
+                "u"
             ]
         },
         // allow fenced blocks in Markdown
