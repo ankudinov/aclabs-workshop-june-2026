@@ -166,3 +166,27 @@ section {
   - Save any progress you need for later outside of the VM
 
 ![bg right:40% fit](img/lab-assign.png)
+
+---
+
+# How It Works
+
+<style scoped>section {font-size: 16px;}</style>
+<style scoped>p {font-size: 16px;}</style>
+
+- The key idea
+  - Single click to start any lab
+  - The link can be integrated to any Web resource, doc or [this slide](https://labs.arista.com/launch?lab_type=avd-playground&origin=tech-lib)
+  - Consistent and ready to use lab environment every time
+  - Familiar VSCode UI and features for everything
+  - Build on top of existing Open Source initiatives!
+- Components
+  - A document in your web browser to click the link and open the lab UI
+  - [labs.arista](https://labs.arista.com/) for auth, API and GCP backend
+    - This is the only proprietary part of the solution!
+  - [acLabs](https://aclabs.arista.com/) - lab packages and lab-base container images
+
+> TARGET 🎯: Build a very similar setup during the workshop!
+> WHY: The way we used to build labs is <u>obsolete</u>. Let's build better labs!
+
+![bg right:50% fit](img/lab-workflow.jpg)
