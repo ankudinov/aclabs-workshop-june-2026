@@ -13,7 +13,8 @@
                 "sup",
                 "figure",
                 "figcaption",
-                "u"
+                "u",
+                "mark"
             ]
         },
         // allow fenced blocks in Markdown

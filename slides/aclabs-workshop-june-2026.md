@@ -127,3 +127,42 @@ section {
 🛑 Stop: 13:00
 
 ![bg left:38%](img/pexels-suzy-hazelwood-1226398.jpg)
+
+---
+
+# What You Need Today
+
+<style scoped>section {font-size: 22px;}</style>
+<style scoped>p {font-size: 22px;}</style>
+
+Participants need:
+
+- A healthy laptop with a working browser
+- Reliable Internet access for the full session
+- A GitHub account you can sign into quickly
+- Optional GitHub Codespaces access
+
+> GitHub access is the critical dependency for the hands-on flow.
+
+![bg left:40% fit](img/prerequisites.jpg)
+
+---
+
+# Meet `labs.arista`
+
+<style scoped>
+section {
+  font-size: 22px;
+}
+</style>
+
+- [labs.arista.com](https://labs.arista.com/) provides UI, API, Cloud runtime and event management for unified containerized lab backend
+- Arista employees and customers can access most of the labs in a single click
+  - Example: [AVD Playground](https://avd.arista.com/6.1/ansible_collections/arista/avd/examples/index.html#avd-playground)
+- However for this workshop we'll use event management tool to avoid auth restrictions
+  - <mark>IMPORTANT:</mark> Provide a valid email when registering!
+- [Click this link](add-link-later) to get your lab instance
+  - The lab VM will be running for approx. 8 hours and is not persistent
+  - Save any progress you need for later outside of the VM
+
+![bg right:40% fit](img/lab-assign.png)
