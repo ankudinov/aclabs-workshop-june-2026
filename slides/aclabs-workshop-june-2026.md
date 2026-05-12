@@ -142,6 +142,14 @@ Participants need:
 - A GitHub account you can sign into quickly
 - Optional GitHub Codespaces access
 
+A good level of system administration / Linux skills expected
+
+- Useful reference materials
+  - [GitSCM book](https://git-scm.com/book/en/v2)
+  - [Git cheat-sheet](https://education.github.com/git-cheat-sheet-education.pdf)
+  - [container.training](https://container.training/)
+  - [VSCode tutorial](https://code.visualstudio.com/docs/getstarted/getting-started)
+
 > GitHub access is the critical dependency for the hands-on flow.
 
 ![bg left:40% fit](img/prerequisites.jpg)
@@ -247,3 +255,52 @@ Honorable mention:
   - Still a great and inspiring lab implementation
 
 ![bg right](img/credits-and-foundation.jpg)
+
+---
+
+# What Is Dev Container
+
+<style scoped>
+section {font-size: 17px;}
+p { font-size: 17px; }
+</style>
+
+<div class="columns">
+<div>
+
+- It's a container 🙂
+  - When it runs, it's not much different to "normal" container
+  - However it's empowered by Dev Container specification
+- [Development Container Specification @ containers.dev](https://containers.dev/)
+  - Originally a proprietary standard for VSCode remote development
+  - Open-sourced by Microsoft in 2022
+  - Defines metadata to build, open and customize the dev environment
+  - Works best with a [supporting tool](https://containers.dev/supporting)
+    - The most well known is VS Code with Dev Containers extension
+  - Keeps the environment definition close to the repo
+
+</div>
+<div>
+
+```jsonc
+// .devcontainer/devcontainer.json
+{
+  // Start from a known base image
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  // Add standard tools during create
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": { "version": "3.11" },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+
+  // Make the repo ready on first open
+  "postCreateCommand": "pip install -r requirements.txt",
+
+  // Useful for docs preview or a small lab UI
+  "forwardPorts": [8000]
+}
+```
+
+</div>
+</div>
