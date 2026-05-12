@@ -223,3 +223,27 @@ section {
   - Now - time to make this a new lab standard
 
 ![bg right:40%](img/how-it-started.jpg)
+
+---
+
+# Credits and Notable Projects
+
+<style scoped>section {font-size: 22px;}</style>
+<style scoped>p {font-size: 22px;}</style>
+
+> "If I have seen further, it is by standing on the shoulders of giants"
+
+Building a better lab would be much harder without:
+
+- Devcontainer specification
+- Code Server / VSCode
+- GitHub and GitHub Actions, Pages and Packages
+- Containerlab
+
+Honorable mention:
+
+- [labs.iximiuz.com](https://labs.iximiuz.com/)
+  - Not directly related and not aimed at network engineers
+  - Still a great and inspiring lab implementation
+
+![bg right](img/credits-and-foundation.jpg)
