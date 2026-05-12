@@ -221,12 +221,13 @@ section {
   - End of 2022 - GitHub Codespaces GA
     - 2023 - first attempt to socialize the new approach to labs at [Ansible Community Day](https://ankudinov.github.io/ansible-devcontainer/#1)
   - early 2024 - AVD container images with every release
+    - wait, this works well with Containerlab!
   - early 2024 - [One-Click SE Demos](https://arista-netdevops-community.github.io/one-click-se-demos/)
   - early 2024 - [TechLibrary](https://tech-library.arista.com/)
   - end 2024 - [acLabs](https://aclabs.arista.com/) as community lab collection and TechLibrary labs backend
   - end of 2024 - [NAN074](https://packetpushers.net/podcasts/network-automation-nerds/nan074-integrate-and-collaborate-with-codespaces-and-containerlab/) with Eric Chou and Roman Dodin
     - First community success, but the key idea is still well hidden between the lines
-  - Jan 2024 - Project cArL birthday (Containerized Arista Labs)
+  - Jan 2026 - Project cArL birthday (Containerized Arista Labs)
     - labs.arista / acLabs / TechLibrary / AVD integration
   - Now - time to make this a new lab standard
 
