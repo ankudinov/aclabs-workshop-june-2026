@@ -305,3 +305,64 @@ p { font-size: 17px; }
 
 </div>
 </div>
+
+---
+
+<style scoped>
+section {font-size: 17px;}
+p { font-size: 17px; }
+</style>
+
+# Hands-on: Create a Dev Container and Start/Stop a Codespace
+
+<div class="columns">
+<div>
+
+- Init a new empty repo on Github
+  - Call it `ac5-workshop`
+- Clone the repo to the Sandbox Lab environment
+  - Do not forget to authenticate!
+- Create following files:
+  - `.devcontainer/devcontainer.json`
+  - `requirements.txt`
+  - `init.sh`
+- Make init script executable:
+  - `chmod +x init.sh`
+- Commit and push
+- Start the Codespace
+- Check
+- Stop and delete the Codespace
+
+</div>
+<div>
+
+```jsonc
+// .devcontainer/devcontainer.json
+{
+  "image": "ghcr.io/aristanetworks/avd/universal:python3.12-avd-v6.1.0",
+  "remoteUser": "avd",
+  "onCreateCommand": "${containerWorkspaceFolder}/init.sh"
+}
+```
+
+```bash
+# requirements.txt
+rich==13.9.4
+```
+
+```bash
+#!/usr/bin/env bash
+
+# init.sh
+
+set +e
+pip install -r requirements.txt
+wget https://raw.githubusercontent.com/textualize/rich/refs/heads/master/examples/tree.py
+echo "alias rich='python3 tree.py $(pwd)'" >> /home/avd/.zshrc
+cp -r /home/avd/.ansible/collections/ansible_collections/arista/avd/examples/single-dc-l3ls/* .
+```
+
+> Fun fact: AVD Container Images might be the first ever pre-build dev environment for network engineers
+
+</div>
+</div>
