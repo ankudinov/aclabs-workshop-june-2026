@@ -193,6 +193,10 @@ section {
 
 ---
 
+![bg](img/lab-evolution.jpg)
+
+---
+
 # How It Started
 
 <style scoped>section {font-size: 16px;}</style>
