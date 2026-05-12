@@ -366,3 +366,30 @@ cp -r /home/avd/.ansible/collections/ansible_collections/arista/avd/examples/sin
 
 </div>
 </div>
+
+---
+
+# Deeplink
+
+<style scoped>
+section {font-size: 20px;}
+p { font-size: 20px; }
+</style>
+
+- Probably the best part about Codespaces is deeplink support
+- <mark>Deeplink</mark> is a specific URL that points to a particular piece of content or a specific page within a website
+- Example:
+
+  ```text
+  https://codespaces.new/ankudinov/ac5-workshop
+            |             |            |
+            +--> API      +--> GH Org  +--> Repo Name
+  ```
+
+- This allows to us to start a lab in a single click from anywhere:
+  - [a doc](https://avd.arista.com/6.1/ansible_collections/arista/avd/examples/index.html#avd-playground)
+  - [a slide](https://labs.arista.com/launch?lab_type=avd-playground&origin=tech-lib)
+  - [a pull request](https://github.com/aristanetworks/avd/pulls)
+  - etc.
+
+![bg right:40% fit](img/codespaces-deeplink.png)
