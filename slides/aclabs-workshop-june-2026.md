@@ -392,4 +392,32 @@ p { font-size: 20px; }
   - [a pull request](https://github.com/aristanetworks/avd/pulls)
   - etc.
 
+> Hands-on: add the README.md with the link to Codespace.
+
 ![bg right:40% fit](img/codespaces-deeplink.png)
+
+---
+
+# Pre-built Containers
+
+<style scoped>
+section {font-size: 18px;}
+p { font-size: 18px; }
+</style>
+
+- Now we have a very nice setup:
+  - A functional environment that can be used as Codespace or own machine
+  - A link to start the Codespace from literally anywhere
+- It is still not perfect. The key drawback:
+  - The container build is happening at runtime
+- Drawbacks:
+  - More time required to setup environments (heavy builds can be quite slow)
+  - Things can change:
+    - Broken APIs (Galaxy, PyPi, etc.)
+    - Removed/deprecated libraries
+    - Updated libraries, especially if version was not fixed in requirements
+    - and more ...
+- Solution:
+  - <mark>Build container in advance!</mark>
+
+![bg right](img/pre-built-diagram.jpg)
