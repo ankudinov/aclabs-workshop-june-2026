@@ -421,3 +421,22 @@ p { font-size: 18px; }
   - <mark>Build container in advance!</mark>
 
 ![bg right](img/pre-built-diagram.jpg)
+
+---
+
+# Pre-built Checklist
+
+<style scoped>
+section {font-size: 24px;}
+p { font-size: 24px; }
+</style>
+
+- There are different ways to build containers
+- We are going to use:
+  - ✅ GitHub Actions
+  - ✅ GitHub Packages
+  - ✅ Matrices
+  - ✅ Reusable workflows
+  - ✅ `devcontainers/ci` action
+
+![bg right](img/pexels-towfiqu-barbhuiya-3440682-11412596.jpg)
