@@ -440,3 +440,216 @@ p { font-size: 24px; }
   - ✅ `devcontainers/ci` action
 
 ![bg right](img/pexels-towfiqu-barbhuiya-3440682-11412596.jpg)
+
+---
+
+# A Simple Workflow to Build a Container
+
+<style scoped>
+section {font-size: 17px;}
+p { font-size: 17px; }
+</style>
+
+<div class="columns">
+<div>
+
+- `containers/my_container/.devcontainer/devcontainer.json`:
+
+  ```jsonc
+  {
+    "image": "ghcr.io/aristanetworks/avd/universal:python3.12-avd-v6.1.0",
+    "remoteUser": "avd",
+    "onCreateCommand": "${containerWorkspaceFolder}/init.sh"
+  }
+  ```
+
+- `containers/my_container/init.sh` (do not forget `chmod +x`):
+
+  ```bash
+  #!/usr/bin/env bash
+
+  set +e
+  pip install -r requirements.txt
+  wget https://raw.githubusercontent.com/textualize/rich/refs/heads/master/examples/tree.py
+  echo "alias rich='python3 tree.py $(pwd)'" >> /home/avd/.zshrc
+  cp -r /home/avd/.ansible/collections/ansible_collections/arista/avd/examples/single-dc-l3ls/* .
+  ```
+
+- `containers/my_container/requirements.txt`
+
+  ```text
+  rich==13.9.4
+  ```
+
+- ⬆️ same files as before, but the workflow requires some comments ➡️
+
+> You can now test `ghcr.io/<your-github-account>/ac5-workshop/my_container:latest`
+
+</div>
+<div>
+
+```yaml
+---
+# .github/workflows/build_image.yml
+name: Reusable build container workflow
+
+env:
+  # BUILDX_NO_DEFAULT_ATTESTATIONS must be set to build only arm64 and amd64 images.
+  # The devcontainers/ci@v0.3 build will fail if this env variable is not set.
+  BUILDX_NO_DEFAULT_ATTESTATIONS: 1
+
+on:
+  push:
+    branches: ['**']
+
+permissions:
+  packages: write
+
+jobs:
+  build_image:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code ✅
+        uses: actions/checkout@v4
+
+      - name: Convert Github repository name to lowercase ⬇️
+        id: gh_repo
+        run: echo "name_lowcase=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
+
+      - name: Setup QEMU for multi-arch builds 🏗️
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ inputs.platform }}
+
+      - name: Setup Docker buildX for multi-arch builds 🏗️
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to the container registry 🗝️
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pre-build dev container image 🔨
+        uses: devcontainers/ci@v0.3
+        env:
+          FROM_IMAGE: ${{ inputs.from_image }}
+          FROM_VARIANT: ${{ inputs.from_variant }}
+          USERNAME: ${{ inputs.username }}
+          UID: ${{ inputs.user_id }}
+          GID: ${{ inputs.group_id }}
+        with:
+          subFolder: containers/my_container
+          imageName: ghcr.io/${{ steps.gh_repo.outputs.name_lowcase }}/my_container
+          imageTag: latest
+          platform: linux/arm64/v8,linux/amd64
+          push: always
+```
+
+</div>
+</div>
+
+---
+
+# Container Build Workflow - 1
+
+<style scoped>
+section {font-size: 17px;}
+p { font-size: 17px; }
+</style>
+
+<div class="columns">
+<div>
+
+</div>
+<div>
+
+```yaml
+---
+# .github/workflows/build_image.yml
+name: Reusable build container workflow
+
+env:
+  # BUILDX_NO_DEFAULT_ATTESTATIONS must be set to build only arm64 and amd64 images.
+  # The devcontainers/ci@v0.3 build will fail if this env variable is not set.
+  BUILDX_NO_DEFAULT_ATTESTATIONS: 1
+
+on:
+  push:
+    branches: ['**']
+
+permissions:
+  packages: write
+
+jobs:
+  build_image:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code ✅
+        uses: actions/checkout@v4
+
+      - name: Convert Github repository name to lowercase ⬇️
+        id: gh_repo
+        run: echo "name_lowcase=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
+
+      - name: Setup QEMU for multi-arch builds 🏗️
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ inputs.platform }}
+
+      - name: Setup Docker buildX for multi-arch builds 🏗️
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to the container registry 🗝️
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+```
+
+</div>
+</div>
+
+---
+
+# A Story of Two Platforms: ARMing You Build
+
+---
+
+# Container Build Workflow - 2
+
+<style scoped>
+section {font-size: 17px;}
+p { font-size: 17px; }
+</style>
+
+<div class="columns">
+<div>
+
+- The [devcontainer/ci](https://github.com/devcontainers/ci) action allows pre-building a Dev Container image inside a CI pipeline
+- It's optional, but makes build easier as we can refer to a Dev Container definition in our repository
+
+</div>
+<div>
+
+```yaml
+      - name: Pre-build dev container image 🔨
+        uses: devcontainers/ci@v0.3
+        env:
+          FROM_IMAGE: ${{ inputs.from_image }}
+          FROM_VARIANT: ${{ inputs.from_variant }}
+          USERNAME: ${{ inputs.username }}
+          UID: ${{ inputs.user_id }}
+          GID: ${{ inputs.group_id }}
+        with:
+          subFolder: containers/my_container
+          imageName: ghcr.io/${{ steps.gh_repo.outputs.name_lowcase }}/my_container
+          imageTag: latest
+          platform: linux/arm64/v8,linux/amd64
+          push: always
+```
+
+</div>
+</div>
