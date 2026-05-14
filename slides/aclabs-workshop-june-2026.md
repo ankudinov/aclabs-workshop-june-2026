@@ -866,53 +866,53 @@ p { font-size: 18px; }
 - Rename `build_image.yml` to `build_child.yml`
 - Change `on:` section:
 
-```yaml
-on:
-  workflow_call:
-    inputs:
-      from_image:
-        required: false
-        type: string
-        default: ghcr.io/aristanetworks/avd/universal
-      from_variant:
-        required: false
-        type: string
-        default: latest
-      username:
-        required: false
-        type: string
-        default: avd
-      user_id:
-        required: false
-        type: string
-        default: 1000
-      group_id:
-        required: false
-        type: string
-        default: 1000
-```
+  ```yaml
+  on:
+    workflow_call:
+      inputs:
+        from_image:
+          required: false
+          type: string
+          default: ghcr.io/aristanetworks/avd/universal
+        from_variant:
+          required: false
+          type: string
+          default: latest
+        username:
+          required: false
+          type: string
+          default: avd
+        user_id:
+          required: false
+          type: string
+          default: 1000
+        group_id:
+          required: false
+          type: string
+          default: 1000
+  ```
 
 </div>
 <div>
 
 - Edit devcontainer/ci section:
 
-```yaml
-      - name: Pre-build dev container image 🔨
-        uses: devcontainers/ci@v0.3
-        env:
-          FROM_IMAGE: ${{ inputs.from_image }}
-          FROM_VARIANT: ${{ inputs.from_variant }}
-          USERNAME: ${{ inputs.username }}
-          UID: ${{ inputs.user_id }}
-          GID: ${{ inputs.group_id }}
-        with:
-          subFolder: containers/lab
-          imageName: ghcr.io/${{ steps.gh_repo.outputs.name_lowcase }}/lab
-          imageTag: uid-${{ inputs.user_id }}
-          platform: linux/arm64/v8,linux/amd64
-          push: always
-```
+  ```yaml
+        - name: Pre-build dev container image 🔨
+          uses: devcontainers/ci@v0.3
+          env:
+            FROM_IMAGE: ${{ inputs.from_image }}
+            FROM_VARIANT: ${{ inputs.from_variant }}
+            USERNAME: ${{ inputs.username }}
+            UID: ${{ inputs.user_id }}
+            GID: ${{ inputs.group_id }}
+          with:
+            subFolder: containers/lab
+            imageName: ghcr.io/${{ steps.gh_repo.outputs.name_lowcase }}/lab
+            imageTag: uid-${{ inputs.user_id }}
+            platform: linux/arm64/v8,linux/amd64
+            push: always
+  ```
 
 - Test with:
   - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/ankudinov/ac5-workshop/lab:uid-1009`
@@ -920,3 +920,42 @@ on:
 
 </div>
 </div>
+
+---
+
+# Add Containerlab and Code Server
+
+<style scoped>
+section {font-size: 18px;}
+p { font-size: 18px; }
+</style>
+
+- Add following to the Dockerfile
+
+  ```Dockerfile
+  # install the latest containerlab
+  RUN bash -c "$(curl -sL https://get.containerlab.dev)"
+  # install coder
+  RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version="4.115.0"
+  ```
+
+- Update the entrypoint
+
+  ```bash
+  if [ -z "${CODE_SERVER_BIND_ADDR}" ]; then
+      CODE_SERVER_BIND_ADDR="0.0.0.0:5000"
+  fi
+  code-server --bind-addr ${CODE_SERVER_BIND_ADDR} --auth password --disable-telemetry --disable-update-check --disable-workspace-trust "${CONTAINERWSF}" &
+  ```
+
+- Add revision build_child.yml workflow:
+
+  ```yaml
+  imageTag: uid-${{ inputs.user_id }}-rev0.1
+  ```
+
+- Run the new lab container and connect to Code Server via port 5000:
+
+  ```bash
+  docker run --rm -it --privileged --name lab -w /lab -v $(pwd):/lab -v /var/lib/docker -e PASSWORD=labpass123 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.1
+  ```
