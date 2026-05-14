@@ -653,3 +653,51 @@ p { font-size: 17px; }
 
 </div>
 </div>
+
+---
+
+# Interacting with The Container via CLI
+
+<style scoped>
+section {font-size: 16px;}
+p { font-size: 16px; }
+</style>
+
+<div class="columns">
+<div>
+
+- Go to your sandbox terminal and use
+  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/ankudinov/ac5-workshop/my_container:latest zsh`
+- Note following errors:
+
+  ```zsh
+  $ rich
+  zsh: command not found: rich
+  $ touch test.tmp
+  touch: cannot touch 'test.tmp': Permission denied
+  ```
+
+- Also - how we run docker container inside another container?
+
+</div>
+<div>
+
+1. Running containers inside containers:
+   - DooD (Docker-out-of-Docker)
+     - Mount the host Docker socket `/var/run/docker.sock` to the parent container
+     - Run child containers directly on the host
+   - DinD (Docker-in-Docker)
+     - Uses some "hackity-hack" 🧚🪄🦄 ([Moby](https://github.com/moby/moby)) to have a full Docker installation inside a parent container
+     - Run child containers inside the parent container
+   - Both have advantages and disadvantages
+     - D-in-D is already [preinstalled in AVD image](https://github.com/aristanetworks/avd/blob/d7064b28b321622c026654821d71a173ed426f77/containers/universal/.devcontainer/devcontainer.json#L19)
+2. Failing `rich` command
+   - We must specify `init.sh`. Better way - add ENTRYPOINT
+   - ENTRYPOINT - is the command/script that is executed when a container starts
+3. `Permission denied`
+   - UIDs are incredibly important when dealing with [non-root users](https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user) on `most` operating systems and must match
+   - `Root is not good!`
+   - Tools like VSCode can re-build images to fix UID, but we'll simply build another container image
+
+</div>
+</div>
