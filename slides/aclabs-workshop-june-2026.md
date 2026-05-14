@@ -701,3 +701,222 @@ p { font-size: 16px; }
 
 </div>
 </div>
+
+---
+
+# Entering The Matrix
+
+<style scoped>
+section {font-size: 22px;}
+p { font-size: 22px; }
+</style>
+
+<div class="columns">
+<div>
+
+- Matrices is a GitHub actions feature that allows permutations of various parameters
+- We'll use a parent workflow with matrix to trigger the child workflow making the build
+  - Reusable workflows feature
+- Create `.github/workflows/build_parent_matrix.yml`
+
+</div>
+<div>
+
+```yaml
+---
+name: build container images
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - .github/workflows/build_child.yml
+      - .github/workflows/build_parent_matrix.yml
+      - containers/lab/**
+  workflow_dispatch:
+    branches: ['**']
+
+permissions:
+  packages: write
+
+jobs:
+  build-lab-containers:
+    uses: ./.github/workflows/build_child.yml
+    strategy:
+      matrix:
+        from_image: ["ghcr.io/aristanetworks/avd/universal"]
+        from_variant: ["python3.12-avd-v5.7.3", "python3.12-avd-v6.1.0"]
+        user_id: ["1000", "1009"]
+        include:
+          - user_id: "1000"
+            group_id: "1000"
+          - user_id: "1009"
+            group_id: "1009"
+    with:
+      from_image: ${{ matrix.from_image }}
+      from_variant: ${{ matrix.from_variant }}
+      user_id: ${{ matrix.user_id }}
+      group_id: ${{ matrix.group_id }}
+```
+
+</div>
+</div>
+
+---
+
+# Add lab container definition
+
+<style scoped>
+section {font-size: 12px;}
+p { font-size: 12px; }
+</style>
+
+<div class="columns">
+<div>
+
+- `containers/lab/.devcontainer/Dockerfile`
+
+  ```Dockerfile
+  ARG FROM_IMAGE
+  ARG FROM_VARIANT
+
+  FROM ${FROM_IMAGE}:${FROM_VARIANT}
+
+  ARG USERNAME
+  ARG UID
+  ARG GID
+
+  USER root
+
+  # This magic sed edits are very important
+  # They allow to build a container with different UID/GID ot of a base
+  ENV OLD_GID="1000"
+  RUN sed -i -e "s/\(${USERNAME}:[^:]*:\)[^:]*:[^:]*/\1${UID}:${GID}/" /etc/passwd; \
+      sed -i -e "s/\([^:]*:[^:]*:\)${OLD_GID}:/\1${GID}:/" /etc/group; \
+      chown -R $UID:$GID /home/$USERNAME
+
+  # copy code-server entrypoint
+  COPY ./entrypoint.sh /bin/entrypoint
+  RUN chmod +x /bin/entrypoint
+  ENTRYPOINT [ "/bin/entrypoint" ]
+
+  USER ${USERNAME}
+  ```
+
+- Do NOT forget `chmod +x` for the entrypoint.sh ➡️
+
+</div>
+<div>
+
+- Add `containers/lab/.devcontainer/devcontainer.json`
+
+  ```jsonc
+  {
+      "build": {
+          "dockerfile": "Dockerfile",
+          "args": {
+              "FROM_IMAGE": "${localEnv:FROM_IMAGE}",
+              "FROM_VARIANT": "${localEnv:FROM_VARIANT}",
+              "USERNAME": "${localEnv:USERNAME}",
+              "UID": "${localEnv:UID}",
+              "GID": "${localEnv:GID}"
+          }
+      }
+  }
+  ```
+
+- Add basic entrypoint `containers/lab/.devcontainer/entrypoint.sh`
+
+  ```bash
+  #!/usr/bin/env bash
+
+  set +e
+
+  # on Codespaces this will not work correctly
+  if ! ${CODESPACES:-false}; then
+      # Execute command from docker cli if any.
+      if [ ${@+True} ]; then
+          exec "$@"
+      # Otherwise just enter sh or zsh.
+      else
+          if [ -f "/bin/zsh" ]; then
+              exec zsh
+          else
+              exec sh
+          fi
+      fi
+  fi
+  ```
+
+</div>
+</div>
+
+---
+
+# Building a Child Workflow
+
+<style scoped>
+section {font-size: 18px;}
+p { font-size: 18px; }
+</style>
+
+<div class="columns">
+<div>
+
+- Rename `build_image.yml` to `build_child.yml`
+- Change `on:` section:
+
+```yaml
+on:
+  workflow_call:
+    inputs:
+      from_image:
+        required: false
+        type: string
+        default: ghcr.io/aristanetworks/avd/universal
+      from_variant:
+        required: false
+        type: string
+        default: latest
+      username:
+        required: false
+        type: string
+        default: avd
+      user_id:
+        required: false
+        type: string
+        default: 1000
+      group_id:
+        required: false
+        type: string
+        default: 1000
+```
+
+</div>
+<div>
+
+- Edit devcontainer/ci section:
+
+```yaml
+      - name: Pre-build dev container image 🔨
+        uses: devcontainers/ci@v0.3
+        env:
+          FROM_IMAGE: ${{ inputs.from_image }}
+          FROM_VARIANT: ${{ inputs.from_variant }}
+          USERNAME: ${{ inputs.username }}
+          UID: ${{ inputs.user_id }}
+          GID: ${{ inputs.group_id }}
+        with:
+          subFolder: containers/lab
+          imageName: ghcr.io/${{ steps.gh_repo.outputs.name_lowcase }}/lab
+          imageTag: uid-${{ inputs.user_id }}
+          platform: linux/arm64/v8,linux/amd64
+          push: always
+```
+
+- Test with:
+  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/ankudinov/ac5-workshop/lab:uid-1009`
+  - `touch test.tmp`
+
+</div>
+</div>
