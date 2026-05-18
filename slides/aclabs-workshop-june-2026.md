@@ -970,23 +970,25 @@ p { font-size: 18px; }
 </style>
 
 - Let's document all the nesting in our setup:
-  - GCP VM
-    - acLabs lab-base container
-      - ac5-workshop/lab container
-        - Code Server
-        - Containerlab
-        - cEOS-lab lab containers and more ...
+  - GCP VM -> acLabs lab-base container -> ac5-workshop/lab container
+    - Code Server, Containerlab, cEOS-lab lab containers and more ...
 - It's amazing, that setup like this can actually work
 - However, we can't access the "inner" Code Server as the "outer" instance will intercept all requests
 - A true engineer mind can not simply accept this fact
 
-```bash
-docker run \                                                                 
-  --name cloudflare-tunnel \
-  --network host \
-  cloudflare/cloudflared:latest \
-  tunnel --url http://127.0.0.1:5000
-```
+  ```bash
+  docker run \                                                                 
+    --name cloudflare-tunnel \
+    --network host \
+    cloudflare/cloudflared:latest \
+    tunnel --url http://127.0.0.1:5000
+  ```
+
+- Alternative:
+
+  ```bash
+  ssh -p 443 -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -R0:127.0.0.1:5000 free.pinggy.io
+  ```
 
 > 🏴‍☠️ WARNING 🏴‍☠️: Never use in prod! This slide was just another dream.
 
