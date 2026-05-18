@@ -1022,3 +1022,27 @@ p { font-size: 20px; }
 - We could build a "fancier" setup and upload lab inventories to GitHub Pages as Artifacts
   - Reason - download option for <mark>portability</mark>
   - Let's keep setup simple for this workshop!
+
+---
+
+# Working With Containerized Network OS Images
+
+<style scoped>
+section {font-size: 20px;}
+p { font-size: 20px; }
+</style>
+
+> ‼️ WARNING ‼️
+> ‼️ avoid committing images to your repository, as this violates EULA ‼️
+> ‼️ `echo "*.tar.gz" >> .gitignore` ‼️
+
+- All vendors are different
+  - Similar approach can likely be applied to other images, but we take no responsibility
+- Fortunately cEOS-lab is one of the best network os images available
+  - It's enough to register, <mark>accept EULA</mark> and download the image
+  - In the workshop we'll use:
+    - On the parent container: `docker save arista/ceos:latest | gzip > ceos_lab.tar.gz; cp ceos_lab.tar.gz l3ls-lab`
+    - On the child container:
+      - Start the docker daemon inside the container `/usr/local/share/docker-init.sh`
+      - `docker load < my_image.tar.gz` (`docker import` if you work with downloaded image)
+- `-v /var/lib/docker` is very important for performance!
