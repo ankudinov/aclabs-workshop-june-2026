@@ -1044,5 +1044,87 @@ p { font-size: 20px; }
     - On the parent container: `docker save arista/ceos:latest | gzip > ceos_lab.tar.gz; cp ceos_lab.tar.gz l3ls-lab`
     - On the child container:
       - Start the docker daemon inside the container `/usr/local/share/docker-init.sh`
-      - `docker load < my_image.tar.gz` (`docker import` if you work with downloaded image)
+      - `docker load < ceos_lab.tar.gz` (`docker import` if you work with downloaded image)
 - `-v /var/lib/docker` is very important for performance!
+
+---
+
+# Image Import With ENTRYPOINT
+
+<style scoped>
+section {font-size: 16px;}
+p { font-size: 16px; }
+</style>
+
+- Update the ENTRYPOINT and build rev0.2 image
+
+  ```bash
+  # run magic moby script for D-in-D
+  /usr/local/share/docker-init.sh
+
+  # check if ceos-lab image already present
+  if [ -z "$(${CONTAINER_ENGINE} image ls | grep 'arista/ceos')" ]; then
+      docker load < ceos_lab.tar.gz
+      echo "WARNING: cEOS-lab image was successfully loaded."
+  fi
+
+  # start the lab
+  make start
+  ```
+
+- Create make shortcut to start and stop the lab
+
+  ```makefile
+  CURRENT_DIR := $(shell pwd)
+
+  .PHONY: help
+  help: ## Display help message
+    @grep -E '^[0-9a-zA-Z_-]+\.*[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+  .PHONY: l3ls
+  l3ls: ## Deploy l3ls lab
+    cp ceos_lab.tar.gz l3ls-lab
+    docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/l3ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+
+  .PHONY: l2ls
+  l2ls: ## Deploy l2ls lab
+    cp ceos_lab.tar.gz l2ls-lab
+    docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+
+  .PHONY: stop
+  stop: ## Stop the lab
+    docker rm -f lab
+  ```
+
+---
+
+# Use VSCode Tasks to Customize Lab Look-and-Feel
+
+---
+
+# Add Deeplink API
+
+---
+
+# Q&A
+
+![bg left](img/pexels-valeriia-miller-3020919.jpg)
+
+- [Ansible AVD](https://avd.arista.com/)
+- [labs.arista](https://labs.arista.com/)
+- [acLabs](https://aclabs.arista.com/)
+- [This repository](https://github.com/ankudinov/aclabs-workshop-june-2026)
+
+```diff
+- One more slide!
++ No more slides.
+```
+
+```bash
+git commit -m "The END!"
+```
+
+<!-- Add footer starting from this slide -->
+<!--
+footer: '![h:20](https://www.arista.com/assets/images/logo/Arista_Logo.png)'
+-->
