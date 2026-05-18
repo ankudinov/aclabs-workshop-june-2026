@@ -118,7 +118,6 @@ section {
 ☕ Break: 10:45 - 11:15
 
 - The Great Escape
-  - Building lab archives on GitHub pages
   - Smart entrypoints and VS Code tasks to solve image import and routines
   - Code-server - the perfect UI
   - Building a simple API for deeplink support
@@ -993,3 +992,33 @@ p { font-size: 18px; }
 > 🏴‍☠️ WARNING 🏴‍☠️: Never use in prod! This slide was just another dream.
 
 ![bg right:33% fit](img/inception-challenge.jpg)
+
+---
+
+# The Lab Inventory
+
+<style scoped>
+section {font-size: 20px;}
+p { font-size: 20px; }
+</style>
+
+- This is NOT a Containerlab training. Check [the docs](https://containerlab.dev/) when in doubt.
+- We'll simply copy AVD example inventories supplied with every AVD container image
+  - L3LS
+
+    ```bash
+    mkdir -p l3ls-lab
+    cp -r /home/avd/.ansible/collections/ansible_collections/arista/avd/examples/single-dc-l3ls/* l3ls-lab/
+    ```
+
+  - L2LS
+
+    ```bash
+    mkdir -p l3ls-lab
+    cp -r /home/avd/.ansible/collections/ansible_collections/arista/avd/examples/l2ls-fabric/* l2ls-lab
+    ```
+
+- We can now switch between different labs by specifying `-v /sandbox/<the-lab-name>:/lab` in the `docker run` command
+- We could build a "fancier" setup and upload lab inventories to GitHub Pages as Artifacts
+  - Reason - download option for <mark>portability</mark>
+  - Let's keep setup simple for this workshop!
