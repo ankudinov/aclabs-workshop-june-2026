@@ -764,7 +764,7 @@ jobs:
 
 ---
 
-# Add lab container definition
+# Add Lab Container Definition
 
 <style scoped>
 section {font-size: 12px;}
@@ -957,5 +957,37 @@ p { font-size: 18px; }
 - Run the new lab container and connect to Code Server via port 5000:
 
   ```bash
-  docker run --rm -it --privileged --name lab -w /lab -v $(pwd):/lab -v /var/lib/docker -e PASSWORD=labpass123 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.1
+  docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/lab_dir:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.1
   ```
+
+---
+
+# The Inception: Container Style
+
+<style scoped>
+section {font-size: 18px;}
+p { font-size: 18px; }
+</style>
+
+- Let's document all the nesting in our setup:
+  - GCP VM
+    - acLabs lab-base container
+      - ac5-workshop/lab container
+        - Code Server
+        - Containerlab
+        - cEOS-lab lab containers and more ...
+- It's amazing, that setup like this can actually work
+- However, we can't access the "inner" Code Server as the "outer" instance will intercept all requests
+- A true engineer mind can not simply accept this fact
+
+```bash
+docker run \                                                                 
+  --name cloudflare-tunnel \
+  --network host \
+  cloudflare/cloudflared:latest \
+  tunnel --url http://127.0.0.1:5000
+```
+
+> 🏴‍☠️ WARNING 🏴‍☠️: Never use in prod! This slide was just another dream.
+
+![bg right:33% fit](img/inception-challenge.jpg)
