@@ -599,6 +599,7 @@ p { font-size: 15px; }
   - if skipped: mixed-case names can break image naming.
 - `setup-qemu`
   - QEMU is required on an `amd64` runner to build `arm64` (cross-platform builds)
+  - you can simply use ARM-runner instead, which is likely a better way
 - `setup-buildx`
   - enable the multi-arch builder
 - `docker/login-action`
@@ -656,7 +657,19 @@ jobs:
 
 ---
 
-# A Story of Two Platforms: ARMing You Build
+# A Story of Two Platforms
+
+<style scoped>
+section {font-size: 22px;}
+p { font-size: 22px; }
+</style>
+
+- Year of 2026...
+- MacBook users everywhere, rise of AI and obvious ARM success
+- Yet some software and container images are x86 only!
+- Fight old habits! Always build for ARM and x86!
+
+![bg right:60%](img/arming-your-build.jpg)
 
 ---
 
