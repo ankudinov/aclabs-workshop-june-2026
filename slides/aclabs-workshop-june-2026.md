@@ -676,8 +676,8 @@ p { font-size: 22px; }
 # Container Build Workflow - 2
 
 <style scoped>
-section {font-size: 17px;}
-p { font-size: 17px; }
+section {font-size: 22px;}
+p { font-size: 22px; }
 </style>
 
 <div class="columns">
@@ -685,24 +685,32 @@ p { font-size: 17px; }
 
 - The [devcontainer/ci](https://github.com/devcontainers/ci) action allows pre-building a Dev Container image inside a CI pipeline
 - It's optional, but makes build easier as we can refer to a Dev Container definition in our repository
+- This is the same Dev Container we would use locally or in a Codespace
+- There are many other ways to build
 
 </div>
 <div>
 
 ```yaml
       - name: Pre-build dev container image 🔨
+        # Reuse the same Dev Container definition we open locally.
         uses: devcontainers/ci@v0.3
         env:
+          # Feed build-time values into the Dockerfile / devcontainer template.
           FROM_IMAGE: ${{ inputs.from_image }}
           FROM_VARIANT: ${{ inputs.from_variant }}
           USERNAME: ${{ inputs.username }}
           UID: ${{ inputs.user_id }}
           GID: ${{ inputs.group_id }}
         with:
+          # Build from one container folder in this repository.
           subFolder: containers/my_container
+          # Publish to a predictable path in GitHub Container Registry.
           imageName: ghcr.io/${{ steps.gh_repo.outputs.name_lowcase }}/my_container
           imageTag: latest
+          # One manifest, two CPU families.
           platform: linux/arm64/v8,linux/amd64
+          # The runner is ephemeral, so publish before it disappears.
           push: always
 ```
 
