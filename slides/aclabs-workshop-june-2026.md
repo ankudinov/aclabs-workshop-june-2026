@@ -1148,12 +1148,12 @@ p { font-size: 16px; }
   .PHONY: l3ls
   l3ls: ## Deploy l3ls lab
     cp ceos_lab.tar.gz l3ls-lab
-    docker run --rm -it --privileged --name lab --detach -w /lab -v $(CURRENT_DIR)/l3ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+    docker run --rm -it --privileged --name l3ls -w /lab -v $(CURRENT_DIR)/l3ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
 
   .PHONY: l2ls
   l2ls: ## Deploy l2ls lab
     cp ceos_lab.tar.gz l2ls-lab
-    docker run --rm -it --privileged --name lab --detach -w /lab -v $(CURRENT_DIR)/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+    docker run --rm -it --privileged --name l2ls -w /lab -v $(CURRENT_DIR)/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
 
   .PHONY: stop
   stop: ## Stop the lab
@@ -1167,6 +1167,53 @@ p { font-size: 16px; }
 ---
 
 # Add Deeplink API
+
+<style scoped>
+section {font-size: 18px;}
+p { font-size: 18px; }
+</style>
+
+<div class="columns">
+<div>
+
+- Let's use a small AI generated script to emulated deeplink-like API
+- Yes! We use AI in this workshop! 🎉 🥳
+- `https://127.0.0.1/<lab-name>` will start specific lab
+- Install Python requirements
+- Add `--detach` to your Make shortcuts for every lab
+- Tunnel ports 5000 and 5001
+- `python3 lab.py` (keep the tab open to check logs)
+- (Optional): Add `https://<tunnel-url>/<lab-name>` to your README
+- Go and click that link!
+
+</div>
+<div>
+
+```python
+import subprocess
+from fastapi import FastAPI, HTTPException
+import uvicorn
+
+app = FastAPI()
+
+@app.get("/{lab_name}")
+def run_lab(lab_name: str):
+    if any(char in lab_name for char in [";", "&", "|", "..", "/"]):
+        raise HTTPException(status_code=400, detail="Invalid lab name")
+
+    try:
+        result = subprocess.run(
+          ["make", lab_name], capture_output=True, text=True, check=True)
+        return {"status": "success", "output": result.stdout}
+    except subprocess.CalledProcessError as e:
+        raise HTTPException(status_code=500, detail=f"Make failed:\n{e.stderr}")
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=5001)
+```
+
+</div>
+</div>
 
 ---
 
