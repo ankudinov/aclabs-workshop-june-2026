@@ -534,22 +534,22 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code ✅
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Convert Github repository name to lowercase ⬇️
         id: gh_repo
         run: echo "name_lowcase=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
 
       - name: Setup QEMU for multi-arch builds 🏗️
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ inputs.platform }}
 
       - name: Setup Docker buildX for multi-arch builds 🏗️
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Login to the container registry 🗝️
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -630,22 +630,22 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code ✅
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Convert Github repository name to lowercase ⬇️
         id: gh_repo
         run: echo "name_lowcase=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
 
       - name: Setup QEMU for multi-arch builds 🏗️
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ inputs.platform }}
 
       - name: Setup Docker buildX for multi-arch builds 🏗️
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Login to the container registry 🗝️
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -1148,12 +1148,12 @@ p { font-size: 16px; }
   .PHONY: l3ls
   l3ls: ## Deploy l3ls lab
     cp ceos_lab.tar.gz l3ls-lab
-    docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/l3ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+    docker run --rm -it --privileged --name lab --detach -w /lab -v $(CURRENT_DIR)/l3ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
 
   .PHONY: l2ls
   l2ls: ## Deploy l2ls lab
     cp ceos_lab.tar.gz l2ls-lab
-    docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+    docker run --rm -it --privileged --name lab --detach -w /lab -v $(CURRENT_DIR)/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
 
   .PHONY: stop
   stop: ## Stop the lab
