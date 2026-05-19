@@ -1162,10 +1162,6 @@ p { font-size: 16px; }
 
 ---
 
-# Use VSCode Tasks to Customize Lab Look-and-Feel
-
----
-
 # Add Deeplink API
 
 <style scoped>
@@ -1210,6 +1206,50 @@ def run_lab(lab_name: str):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=5001)
+```
+
+</div>
+</div>
+
+---
+
+# Use VSCode Tasks to Customize Lab Look-and-Feel
+
+<style scoped>
+section {font-size: 24px;}
+p { font-size: 24px; }
+</style>
+
+<div class="columns">
+<div>
+
+- VSCode / Code Server is the best base you can imagine for your lab
+- We can further tweak and customize our labs with very low effort
+- Let's add following to our setup:
+  - Containerlab extension
+  - A random Python script that will greet us on lab start
+
+</div>
+<div>
+
+```jsonc
+// .vscode/tasks.json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "init_lab",
+            "command": "python3 greet.py",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        }
+    ]
+}
 ```
 
 </div>
