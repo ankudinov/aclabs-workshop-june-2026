@@ -579,12 +579,30 @@ jobs:
 # Container Build Workflow - 1
 
 <style scoped>
-section {font-size: 17px;}
-p { font-size: 17px; }
+section {font-size: 15px;}
+p { font-size: 15px; }
 </style>
 
 <div class="columns">
 <div>
+
+- `env`
+  - disables default attestations for ARM images. If missing: the workflow can fail
+- `on.push`
+  - run the workflow on every branch, filter to specific branch in prod
+- `permissions.packages: write`
+  - allow pushes to `ghcr.io`. Check your GitHub Actions configuration as well
+- `actions/checkout`
+  - clone repo files onto the runner first
+- `gh_repo`
+  - lowercase the repo name for GHCR image tags
+  - if skipped: mixed-case names can break image naming.
+- `setup-qemu`
+  - QEMU is required on an `amd64` runner to build `arm64` (cross-platform builds)
+- `setup-buildx`
+  - enable the multi-arch builder
+- `docker/login-action`
+  - sign in to `ghcr.io` with `${{ secrets.GITHUB_TOKEN }}`
 
 </div>
 <div>
