@@ -216,8 +216,8 @@ section {
 
 # Why It's Important
 
-<style scoped>section {font-size: 18px;}</style>
-<style scoped>p {font-size: 18px;}</style>
+<style scoped>section {font-size: 16px;}</style>
+<style scoped>p {font-size: 16px;}</style>
 
 ![bg right:40%](img/fantastic-labs.jpg)
 
@@ -230,6 +230,10 @@ section {
   - Standard based and low maintenance
     - No need to re-invent another custom square-shaped wheel when there are great tools out there already
 - We are not that different from devs
+- But... Standard Dev Container / Codespaces workflow brings challenges
+  - Not optimized for network lab use case
+  - Not under lab maintainer full control
+  - High entrance barrier for many network engineers
 - Some use cases
   - Modern lab collection: Git-powered, runs anywhere, AI-friendly, etc.
     - [TechLibrary](https://tech-library.arista.com/)
