@@ -808,7 +808,7 @@ jobs:
     strategy:
       matrix:
         from_image: ["ghcr.io/aristanetworks/avd/universal"]
-        from_variant: ["python3.12-avd-v5.7.3", "python3.12-avd-v6.1.0"]
+        from_variant: ["python3.12-avd-v6.1.0"]
         user_id: ["1000", "1009"]
         include:
           - user_id: "1000"
@@ -1078,7 +1078,7 @@ p { font-size: 20px; }
   - L2LS
 
     ```bash
-    mkdir -p l3ls-lab
+    mkdir -p l2ls-lab
     cp -r /home/avd/.ansible/collections/ansible_collections/arista/avd/examples/l2ls-fabric/* l2ls-lab
     ```
 
@@ -1136,7 +1136,7 @@ p { font-size: 16px; }
   make start
   ```
 
-- Create make shortcut to start and stop the lab
+- Create make shortcut to start and stop the lab. Use TABs, not spaces!
 
   ```makefile
   CURRENT_DIR := $(shell pwd)
