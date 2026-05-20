@@ -835,8 +835,8 @@ cat /lib/modules/$(uname -r)/config
 # Entering The Matrix
 
 <style scoped>
-section {font-size: 22px;}
-p { font-size: 22px; }
+section {font-size: 18px;}
+p { font-size: 18px; }
 </style>
 
 <div class="columns">
