@@ -96,32 +96,42 @@ section {
 
 # Agenda
 
-<style scoped>section {font-size: 13px;}</style>
-<style scoped>p {font-size: 13px;}</style>
+<style scoped>
+section {font-size: 15px;}
+p {font-size: 15px;}
+h3 {margin-bottom: 0.2em;}
+</style>
+
+<div class="columns">
+<div>
 
 :fast_forward: Start: 09:00
 
-- Kickoff & Infrastructure:
-  - Intro, logistics, and `labs.arista` environment overview and user assignment
-- Evolution of the Network Automation and Lab Environment
-  - Yet another ~~dev~~ lab environment challenge and Dev Container intro
-  - The journey from early AVD container images to a cloud-hosted labs
-  - Containerlab on GitHub Codespaces and why everyone can build this
-- The Deeplink Mandate:
-  - Understanding why deeplinks are critical for reproducibility and workflow efficiency
-- Getting Started Hands-On:
-  - Setup a lab repository, Codespaces start-stop exercise
-  - Container pre-builds and why they are <u>**VERY**</u> important
-  - The story of two platforms: ARMing your lab
+## Morning `09:00-10:45`
+
+- Intro, logistics, and `labs.arista` environment overview and user assignment
+- Evolution of the Network Labs and why better labs matter
+- Dev Containers, Codespaces and deeplink hands-on
+- Pre-built containers, GitHub Actions and GHCR
 - A survival guide to SELinux, the kernel and permissions
+- The story of two platforms: ARMing your lab
 
-☕ Break: 10:45 - 11:15
+</div>
+<div>
 
-- The Great Escape
-  - Smart entrypoints and VS Code tasks to solve image import and routines
-  - Code-server - the perfect UI
-  - Building a simple API for deeplink support
-- Summary, credits and call for a change
+☕ Break `10:45-11:15`
+
+## Afternoon `11:15-13:00`
+
+- GitHub Actions: reusable workflows and matrix builds
+- Add Containerlab, code-server and inventory
+- Using ENTRYPOINT for image import and more
+- Build a simple deeplink API to trigger lab deployment
+- Code-server - the perfect UI
+  - Use tasks and other VSCode features to customize the lab
+
+</div>
+</div>
 
 🛑 Stop: 13:00
 
@@ -719,6 +729,31 @@ p { font-size: 22px; }
 
 ---
 
+# On D-in-D and Moby
+
+<style scoped>
+section {font-size: 16px;}
+p { font-size: 16px; }
+</style>
+
+- Go to your sandbox terminal and run the container image we just published
+- Wait! How we run docker container inside another container?
+- DooD (Docker-out-of-Docker)
+  - Mount the host Docker socket `/var/run/docker.sock` to the parent container
+  - Run child containers directly on the host
+- DinD (Docker-in-Docker)
+  - Uses some "hackity-hack" 🧚🪄🦄 ([Moby](https://github.com/moby/moby)) to have a full Docker installation inside a parent container
+  - Run child containers inside the parent container
+- Both have advantages and disadvantages
+  - D-in-D is already [preinstalled in AVD image](https://github.com/aristanetworks/avd/blob/d7064b28b321622c026654821d71a173ed426f77/containers/universal/.devcontainer/devcontainer.json#L19)
+
+</div>
+</div>
+
+![bg right:52%](img/dind-moby.jpg)
+
+---
+
 # Interacting with The Container via CLI
 
 <style scoped>
@@ -740,30 +775,23 @@ p { font-size: 16px; }
   touch: cannot touch 'test.tmp': Permission denied
   ```
 
-- Also - how we run docker container inside another container?
-
 </div>
 <div>
 
-1. Running containers inside containers:
-   - DooD (Docker-out-of-Docker)
-     - Mount the host Docker socket `/var/run/docker.sock` to the parent container
-     - Run child containers directly on the host
-   - DinD (Docker-in-Docker)
-     - Uses some "hackity-hack" 🧚🪄🦄 ([Moby](https://github.com/moby/moby)) to have a full Docker installation inside a parent container
-     - Run child containers inside the parent container
-   - Both have advantages and disadvantages
-     - D-in-D is already [preinstalled in AVD image](https://github.com/aristanetworks/avd/blob/d7064b28b321622c026654821d71a173ed426f77/containers/universal/.devcontainer/devcontainer.json#L19)
-2. Failing `rich` command
+1. Failing `rich` command
    - We must specify `init.sh`. Better way - add ENTRYPOINT
    - ENTRYPOINT - is the command/script that is executed when a container starts
-3. `Permission denied`
+2. `Permission denied`
    - UIDs are incredibly important when dealing with [non-root users](https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user) on `most` operating systems and must match
    - `Root is not good!`
    - Tools like VSCode can re-build images to fix UID, but we'll simply build another container image
 
 </div>
 </div>
+
+---
+
+# A survival guide to SELinux, the kernel and permissions
 
 ---
 
