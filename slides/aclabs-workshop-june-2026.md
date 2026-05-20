@@ -1154,10 +1154,6 @@ p { font-size: 16px; }
   l2ls: ## Deploy l2ls lab
     cp ceos_lab.tar.gz l2ls-lab
     docker run --rm -it --privileged --name l2ls -w /lab -v $(CURRENT_DIR)/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
-
-  .PHONY: stop
-  stop: ## Stop the lab
-    docker rm -f lab
   ```
 
 ---
