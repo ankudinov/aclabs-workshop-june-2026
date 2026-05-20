@@ -1322,6 +1322,12 @@ p { font-size: 24px; }
 
 ---
 
+# Placeholder Slide
+
+Placeholder for some closing slide
+
+---
+
 # Q&A
 
 ![bg left](img/pexels-valeriia-miller-3020919.jpg)
