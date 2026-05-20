@@ -793,6 +793,43 @@ p { font-size: 16px; }
 
 # A survival guide to SELinux, the kernel and permissions
 
+<style scoped>
+section {font-size: 22px;}
+p { font-size: 22px; }
+</style>
+
+<div class="columns">
+<div>
+
+- Never deploy your labs on "random" machines!
+- Containers do NOT provide full isolation and host machine is part of your environment
+- Understand UIDs, permissions and the impact of the root user account
+- Avoid SELinux and other great security features, when not strictly required
+  - Focus on lab isolation and low lifetime instead
+  - When you must - build a good level of understanding first! Deploying random staff on SELinux hurts!
+- Pick a friendly Linux distribution - Debian / Ubuntu
+
+</div>
+<div>
+
+- Watch your kernel!
+  - Also during upgrades!
+- Kernel challenge examples:
+  - 6.10 Linuxkit with CONFIG_TCP_MD5SIG disabled. cEOS-lab BGP password authentication breaks
+  - legacy ip_tables are not loaded by default. This was breaking [VSCode D-in-D helper script](https://github.com/containers/podman/issues/25153)
+
+```bash
+# list loaded kernel modules
+lsmod
+# check kernel version
+uname -a
+# check kernel configuration
+cat /lib/modules/$(uname -r)/config
+```
+
+</div>
+</div>
+
 ---
 
 # Entering The Matrix
