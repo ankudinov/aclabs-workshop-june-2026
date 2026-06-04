@@ -59,7 +59,7 @@ pre {
 __author__ = [
   "Petr Ankudinov (pa@), Senior Solutions Engineer",
   "Mitch Vaughan (mitch@), Principal Engineer",
-  "Carl Buchmann (carl.buchmann@), Manager"
+  "Carl Buchmann (carl.buchmann@), Manager, Solutions Engineering"
 ]
 ```
 
@@ -1109,7 +1109,7 @@ p { font-size: 18px; }
 - A true engineer mind can not simply accept this fact
 
   ```bash
-  docker run \                                                                 
+  docker run \
     --name cloudflare-tunnel \
     --network host \
     cloudflare/cloudflared:latest \
