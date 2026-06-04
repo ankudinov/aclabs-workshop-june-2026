@@ -59,7 +59,7 @@ pre {
 __author__ = [
   "Petr Ankudinov (pa@), Senior Solutions Engineer",
   "Mitch Vaughan (mitch@), Principal Engineer",
-  "Carl Buchmann (carl.buchmann@), Manager"
+  "Carl Buchmann (carl.buchmann@), Manager, Solutions Engineering"
 ]
 ```
 
@@ -769,7 +769,7 @@ p { font-size: 16px; }
 <div>
 
 - Go to your sandbox terminal and use
-  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/ankudinov/ac5-workshop/my_container:latest zsh`
+  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/<username>/ac5-workshop/my_container:latest zsh`
 - Note following errors:
 
   ```zsh
@@ -860,13 +860,11 @@ name: build container images
 
 on:
   push:
-    branches: ['**']
     paths:
       - .github/workflows/build_child.yml
       - .github/workflows/build_parent_matrix.yml
       - containers/lab/**
   workflow_dispatch:
-    branches: ['**']
 
 permissions:
   packages: write
@@ -957,7 +955,7 @@ p { font-size: 12px; }
   }
   ```
 
-- Add basic entrypoint `containers/lab/.devcontainer/entrypoint.sh`
+- Add basic ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh`
 
   ```bash
   #!/usr/bin/env bash
@@ -1027,7 +1025,7 @@ p { font-size: 18px; }
 </div>
 <div>
 
-- Edit devcontainer/ci section:
+- Edit Pre-build dev container image in `jobs:` ci section:
 
   ```yaml
         - name: Pre-build dev container image 🔨
@@ -1047,8 +1045,10 @@ p { font-size: 18px; }
   ```
 
 - Test with:
-  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/ankudinov/ac5-workshop/lab:uid-1009`
+  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/<username>/ac5-workshop/lab:uid-1009`
   - `touch test.tmp`
+
+Tip: Make sure to exit the container!
 
 </div>
 </div>
@@ -1062,7 +1062,7 @@ section {font-size: 18px;}
 p { font-size: 18px; }
 </style>
 
-- Add following to the Dockerfile
+- Add following to the Dockerfile `containers/lab/.devcontainer/Dockerfile`
 
   ```Dockerfile
   # install the latest containerlab
@@ -1071,7 +1071,7 @@ p { font-size: 18px; }
   RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version="4.115.0"
   ```
 
-- Update the entrypoint
+- Update the ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh`
 
   ```bash
   if [ -z "${CODE_SERVER_BIND_ADDR}" ]; then
@@ -1089,7 +1089,7 @@ p { font-size: 18px; }
 - Run the new lab container and connect to Code Server via port 5000:
 
   ```bash
-  docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/lab_dir:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.1
+  docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/lab_dir:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/<username>/ac5-workshop/lab:uid-1009-rev0.1
   ```
 
 ---
@@ -1109,7 +1109,7 @@ p { font-size: 18px; }
 - A true engineer mind can not simply accept this fact
 
   ```bash
-  docker run \                                                                 
+  docker run \
     --name cloudflare-tunnel \
     --network host \
     cloudflare/cloudflared:latest \
@@ -1189,7 +1189,7 @@ section {font-size: 16px;}
 p { font-size: 16px; }
 </style>
 
-- Update the ENTRYPOINT and build rev0.2 image
+- Update the ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh` and build rev0.2 image
 
   ```bash
   # run magic moby script for D-in-D
@@ -1217,12 +1217,12 @@ p { font-size: 16px; }
   .PHONY: l3ls
   l3ls: ## Deploy l3ls lab
     cp ceos_lab.tar.gz l3ls-lab
-    docker run --rm -it --privileged --name l3ls -w /lab -v $(CURRENT_DIR)/l3ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+    docker run --rm -it --privileged --name l3ls -w /lab -v $(CURRENT_DIR)/l3ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/<username>/ac5-workshop/lab:uid-1009-rev0.2
 
   .PHONY: l2ls
   l2ls: ## Deploy l2ls lab
     cp ceos_lab.tar.gz l2ls-lab
-    docker run --rm -it --privileged --name l2ls -w /lab -v $(CURRENT_DIR)/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+    docker run --rm -it --privileged --name l2ls -w /lab -v $(CURRENT_DIR)/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/<username>/ac5-workshop/lab:uid-1009-rev0.2
   ```
 
 ---
@@ -1241,6 +1241,7 @@ p { font-size: 18px; }
 - Yes! We use AI in this workshop! 🎉 🥳
 - `https://127.0.0.1/<lab-name>` will start specific lab
 - Install Python requirements
+    - `pip install fastapi uvicorn`
 - Add `--detach` to your Make shortcuts for every lab
 - Tunnel ports 5000 and 5001
 - `python3 lab.py` (keep the tab open to check logs)
