@@ -1241,6 +1241,7 @@ p { font-size: 18px; }
 - Yes! We use AI in this workshop! 🎉 🥳
 - `https://127.0.0.1/<lab-name>` will start specific lab
 - Install Python requirements
+    - `pip install fastapi uvicorn`
 - Add `--detach` to your Make shortcuts for every lab
 - Tunnel ports 5000 and 5001
 - `python3 lab.py` (keep the tab open to check logs)
