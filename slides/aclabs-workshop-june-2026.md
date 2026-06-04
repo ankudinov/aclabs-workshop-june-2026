@@ -860,13 +860,11 @@ name: build container images
 
 on:
   push:
-    branches: ['**']
     paths:
       - .github/workflows/build_child.yml
       - .github/workflows/build_parent_matrix.yml
       - containers/lab/**
   workflow_dispatch:
-    branches: ['**']
 
 permissions:
   packages: write
@@ -957,7 +955,7 @@ p { font-size: 12px; }
   }
   ```
 
-- Add basic entrypoint `containers/lab/.devcontainer/entrypoint.sh`
+- Add basic ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh`
 
   ```bash
   #!/usr/bin/env bash
@@ -1027,7 +1025,7 @@ p { font-size: 18px; }
 </div>
 <div>
 
-- Edit devcontainer/ci section:
+- Edit Pre-build dev container image in `jobs:` ci section:
 
   ```yaml
         - name: Pre-build dev container image 🔨
@@ -1050,6 +1048,8 @@ p { font-size: 18px; }
   - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/<username>/ac5-workshop/lab:uid-1009`
   - `touch test.tmp`
 
+Tip: Make sure to exit the container!
+
 </div>
 </div>
 
@@ -1062,7 +1062,7 @@ section {font-size: 18px;}
 p { font-size: 18px; }
 </style>
 
-- Add following to the Dockerfile
+- Add following to `containers/lab/.devcontainer/Dockerfile`
 
   ```Dockerfile
   # install the latest containerlab
@@ -1071,7 +1071,7 @@ p { font-size: 18px; }
   RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version="4.115.0"
   ```
 
-- Update the entrypoint
+- Update the ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh`
 
   ```bash
   if [ -z "${CODE_SERVER_BIND_ADDR}" ]; then
@@ -1189,7 +1189,7 @@ section {font-size: 16px;}
 p { font-size: 16px; }
 </style>
 
-- Update the ENTRYPOINT and build rev0.2 image
+- Update the ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh` and build rev0.2 image
 
   ```bash
   # run magic moby script for D-in-D
