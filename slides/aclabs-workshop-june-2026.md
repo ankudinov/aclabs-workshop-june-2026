@@ -1062,7 +1062,7 @@ section {font-size: 18px;}
 p { font-size: 18px; }
 </style>
 
-- Add following to `containers/lab/.devcontainer/Dockerfile`
+- Add following to the Dockerfile `containers/lab/.devcontainer/Dockerfile`
 
   ```Dockerfile
   # install the latest containerlab
