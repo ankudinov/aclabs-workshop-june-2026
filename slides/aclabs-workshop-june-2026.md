@@ -769,7 +769,7 @@ p { font-size: 16px; }
 <div>
 
 - Go to your sandbox terminal and use
-  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/ankudinov/ac5-workshop/my_container:latest zsh`
+  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/<username>/ac5-workshop/my_container:latest zsh`
 - Note following errors:
 
   ```zsh
@@ -1047,7 +1047,7 @@ p { font-size: 18px; }
   ```
 
 - Test with:
-  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/ankudinov/ac5-workshop/lab:uid-1009`
+  - `docker run --rm -it -v $(pwd):/home/avd/workspace -w /home/avd/workspace ghcr.io/<username>/ac5-workshop/lab:uid-1009`
   - `touch test.tmp`
 
 </div>
@@ -1089,7 +1089,7 @@ p { font-size: 18px; }
 - Run the new lab container and connect to Code Server via port 5000:
 
   ```bash
-  docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/lab_dir:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.1
+  docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/lab_dir:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/<username>/ac5-workshop/lab:uid-1009-rev0.1
   ```
 
 ---
@@ -1217,12 +1217,12 @@ p { font-size: 16px; }
   .PHONY: l3ls
   l3ls: ## Deploy l3ls lab
     cp ceos_lab.tar.gz l3ls-lab
-    docker run --rm -it --privileged --name l3ls -w /lab -v $(CURRENT_DIR)/l3ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+    docker run --rm -it --privileged --name l3ls -w /lab -v $(CURRENT_DIR)/l3ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/<username>/ac5-workshop/lab:uid-1009-rev0.2
 
   .PHONY: l2ls
   l2ls: ## Deploy l2ls lab
     cp ceos_lab.tar.gz l2ls-lab
-    docker run --rm -it --privileged --name l2ls -w /lab -v $(CURRENT_DIR)/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/ankudinov/ac5-workshop/lab:uid-1009-rev0.2
+    docker run --rm -it --privileged --name l2ls -w /lab -v $(CURRENT_DIR)/l2ls-lab:/lab -v /var/lib/docker -e PASSWORD=labpass125 -p 5000:5000 ghcr.io/<username>/ac5-workshop/lab:uid-1009-rev0.2
   ```
 
 ---
