@@ -1323,9 +1323,26 @@ p { font-size: 24px; }
 
 ---
 
-# Placeholder Slide
+<style scoped>
+section {font-size: 22px;}
+p { font-size: 22px; }
+</style>
 
-Placeholder for some closing slide
+# What to Do Next
+
+- Get a VM, experiment, learn and ask questions
+- Build similar setup @work
+  - Modify any building blocks! Nothing is set in stone as long as it works!
+  - Beware of licensing restrictions, but cEOS-lab can be used as long as it does NOT leave customer premises
+- Build a small collection of pre-defined labs for your use cases, replicate your network (full or fragments)
+  - Key requirement: spinning labs for everyday use should be effortless!
+  - Git init everything and commit if important! No on-box save!
+  - Use your labs for testing, demos, integrate into your slides for change approval
+    - Or post mortem 😀
+- Promote this to your colleagues and management
+- Integrate to you CI pipeline if you have one
+  - Especially great for PR review!
+- Get promoted!
 
 ---
 
