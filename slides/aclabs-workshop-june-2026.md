@@ -864,7 +864,6 @@ on:
       - .github/workflows/build_child.yml
       - .github/workflows/build_parent_matrix.yml
       - containers/lab/**
-  workflow_dispatch:
 
 permissions:
   packages: write
