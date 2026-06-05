@@ -1088,6 +1088,7 @@ p { font-size: 18px; }
 - Run the new lab container and connect to Code Server via port 5000:
 
   ```bash
+  # set any secret string as PASSWORD for authentication (can be random in prod)
   docker run --rm -it --privileged --name lab --detach -w /lab -v /sandbox/lab_dir:/lab -v /var/lib/docker -e PASSWORD=labpass124 -p 5000:5000 ghcr.io/<username>/ac5-workshop/lab:uid-1009-rev0.1
   ```
 
