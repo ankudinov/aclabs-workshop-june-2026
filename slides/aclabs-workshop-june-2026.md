@@ -207,7 +207,7 @@ section {
 > TARGET 🎯: Build a very similar setup during the workshop!
 > WHY: The way we used to build labs is <u>obsolete</u>. Let's build better labs!
 
-![bg right:50% fit](img/lab-workflow.jpg)
+![bg right:48% fit](img/lab-workflow.jpg)
 
 ---
 
