@@ -182,6 +182,7 @@ section {
 - [Click this link](https://labs.arista.com/events/api/v1/share_event/290/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ0NiwiZmlyc3RfbmFtZSI6IlBldHIiLCJsYXN0X25hbWUiOiJBbmt1ZGlub3YiLCJjb21wYW55IjoiQXJpc3RhIE5ldHdvcmtzIiwicm9sZSI6ImFyaXN0YV9zZSIsInR5cGUiOiJzaGFyZV9ldmVudCIsIm9yaWdpbiI6InNlX3BvcnRhbCIsImV2ZW50X2lkIjoiMjkwIiwiaWF0IjoxNzgwODkwODE2LCJleHAiOjE3ODA5MzQzOTl9.XCfxtXti_eCigpLlqT_X6FMzhDd3dSdIl9RZbROEXnk) to get your lab instance
   - The lab VM will be running for approx. 8 hours and is not persistent
   - Save any progress you need for later outside of the VM
+- [The extension link](https://labs.arista.com/events/api/v1/share_event/293/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTcyLCJmaXJzdF9uYW1lIjoiTWl0Y2hlbGwiLCJsYXN0X25hbWUiOiJWYXVnaGFuIiwiY29tcGFueSI6IkFyaXN0YSBOZXR3b3JrcyIsInJvbGUiOiJhcmlzdGFfc2UiLCJ0eXBlIjoic2hhcmVfZXZlbnQiLCJvcmlnaW4iOiJzZV9wb3J0YWwiLCJldmVudF9pZCI6IjI5MyIsImlhdCI6MTc4MDg5OTYzMSwiZXhwIjoxNzgwOTg2NTk5fQ.sRZeEQA3JSv7dZNDUZk1c95G4URjdD7VwgrbHRuqX_g). Please wait until previous event is full!
 
 ![bg right:40% fit](img/lab-assign.png)
 
