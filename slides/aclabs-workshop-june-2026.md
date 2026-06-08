@@ -88,7 +88,8 @@ section {
 - Wi-Fi & Connectivity
   - Network Name: **[wifi-ssid]**
   - Password: **[wifi-password]**
-- Workshop repo: [ankudinov/aclabs-workshop-june-2026](https://github.com/ankudinov/aclabs-workshop-june-2026)
+- Workshop repo: [https://github.com/ankudinov/aclabs-workshop-june-2026](https://github.com/ankudinov/aclabs-workshop-june-2026)
+  - Or type less with [https://tinyurl.com/6er72uw2](https://tinyurl.com/6er72uw2)
 
 > Scan QR code to access the workshop repository.
 
