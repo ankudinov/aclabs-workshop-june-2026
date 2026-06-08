@@ -268,7 +268,7 @@ section {
   - Project cArL birthday (Containerized Arista Labs)
     - labs.arista / acLabs / TechLibrary / AVD integration
 - Now
-  - Time to make this a new lab standard
+  - Time to make this the new lab standard
 
 ![bg right:40%](img/how-it-started.jpg)
 
