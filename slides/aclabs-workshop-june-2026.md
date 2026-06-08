@@ -178,7 +178,7 @@ section {
   - Example: [AVD Playground](https://avd.arista.com/6.1/ansible_collections/arista/avd/examples/index.html#avd-playground)
 - However for this workshop we'll use event management tool to avoid auth restrictions
   - <mark>IMPORTANT:</mark> Provide a valid email when registering!
-- [Click this link](add-link-later) to get your lab instance
+- [Click this link](https://labs.arista.com/events/api/v1/share_event/290/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ0NiwiZmlyc3RfbmFtZSI6IlBldHIiLCJsYXN0X25hbWUiOiJBbmt1ZGlub3YiLCJjb21wYW55IjoiQXJpc3RhIE5ldHdvcmtzIiwicm9sZSI6ImFyaXN0YV9zZSIsInR5cGUiOiJzaGFyZV9ldmVudCIsIm9yaWdpbiI6InNlX3BvcnRhbCIsImV2ZW50X2lkIjoiMjkwIiwiaWF0IjoxNzgwODkwODE2LCJleHAiOjE3ODA5MzQzOTl9.XCfxtXti_eCigpLlqT_X6FMzhDd3dSdIl9RZbROEXnk) to get your lab instance
   - The lab VM will be running for approx. 8 hours and is not persistent
   - Save any progress you need for later outside of the VM
 
