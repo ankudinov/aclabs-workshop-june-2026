@@ -1072,7 +1072,7 @@ p { font-size: 18px; }
   RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version="4.115.0"
   ```
 
-- Update the ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh`
+- Update the ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh`. Add after `set +e`
 
   ```bash
   if [ -z "${CODE_SERVER_BIND_ADDR}" ]; then
@@ -1191,7 +1191,8 @@ section {font-size: 16px;}
 p { font-size: 16px; }
 </style>
 
-- Update the ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh` and build rev0.2 image
+- Update the ENTRYPOINT `containers/lab/.devcontainer/entrypoint.sh` and build rev0.2 image.
+  - Add this after the `code-server` block
 
   ```bash
   # run magic moby script for D-in-D
